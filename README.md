@@ -1,3 +1,4 @@
+
 # 🖥️ Dell Optiplex 3040 Hackintosh – OpenCore EFI
 
 <p align="center">
@@ -36,6 +37,7 @@
 - ✅ Intel HD 530 — full QE/CI acceleration (native)
 - ✅ Audio (speakers + headphone jack)
 - ✅ Ethernet
+- ✅ **Sleep / Wake** (after applying fixes)
 - ✅ USB (mapped with USBToolBox)
 - ✅ CPU Power Management (XCPM, working C-states)
 - ✅ iMessage / FaceTime / App Store
@@ -45,7 +47,6 @@
 
 ## ❌ Not Working
 
-- ❌ Sleep / Wake (known Skylake Optiplex issue)
 - ❌ Wi‑Fi (no card installed)
 - ❌ Bluetooth (no card installed)
 - ❌ AirDrop / Handoff (requires Wi‑Fi + BT)
@@ -90,7 +91,7 @@ This EFI resolves the issue entirely via **WhateverGreen framebuffer patches**.
 ### 🏁 Boot Arguments
 
 ```
-igfxonln=1 -igfxdvmt
+igfxonln=1 -igfxdvmt keepsyms=1
 ```
 
 ✅ Fully accelerated  
@@ -124,17 +125,30 @@ igfxonln=1 -igfxdvmt
 
 ---
 
-## ⚠️ Known Issue – Sleep
+## 🌙 Sleep / Wake Fix
 
-Sleep is unstable on this model.
+By default, sleep is unstable. To make it work perfectly, you need to apply these settings.
 
-Disable it:
-
+### 1. Terminal Commands
+Open Terminal and run the following commands:
 ```bash
-sudo pmset -a sleep 0
-sudo pmset -a hibernatemode 0
-sudo pmset -a disksleep 0
+# Set proper idle timers (display off after 10m, system sleep after 15m)
+sudo pmset -a sleep 15 displaysleep 10 disksleep 10
+
+# Disable network activity during sleep (prevents random wakes)
+sudo pmset -a tcpkeepalive 0
+
+# Disable wake by nearby Apple devices
+sudo pmset -a proximitywake 0
 ```
+### 2. Dell BIOS Power Settings
+Restart and press **F2** to enter BIOS. Go to `Power Management` and set:
+| Setting | Value |
+|----------|--------|
+| **Deep Sleep Control** | **Enabled in S4 and S5** |
+| **USB Wake Support** | **Disabled** |
+
+This prevents instant wake-ups from USB devices like gaming mice.
 
 ---
 
@@ -162,4 +176,4 @@ MIT License — free to use, modify and share.
 
 ---
 
-⭐ If this EFI helped you, consider leaving a star!
+⭐ If this EFI helped you, consider leaving a star
