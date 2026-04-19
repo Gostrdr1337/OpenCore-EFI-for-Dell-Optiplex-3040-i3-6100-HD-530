@@ -1,5 +1,15 @@
 # 🖥️ Dell Optiplex 3040 Hackintosh – OpenCore EFI
 
+<p align="center">
+  <img src="https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Logos/OpenCore_with_text_Small.png" width="200" height="48" alt="OpenCore logo"/>
+</p>
+
+---
+
+<p align="center">
+  <img src="Screenshots/sonoma_proof.png" width="700" alt="macOS Sonoma 14 running on Dell Optiplex 3040"/>
+</p>
+
 > ✅ macOS Sonoma 14 on Dell Optiplex 3040  
 > ✅ Intel HD 530 (fully accelerated)  
 > ✅ No dedicated GPU  
